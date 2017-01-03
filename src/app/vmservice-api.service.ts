@@ -7,13 +7,20 @@ export class VmserviceApiService {
   baseUrl: string;
 
   constructor(private http: Http) {
-    this.baseUrl = 'http://192.168.0.1:3000';
+    this.baseUrl = 'http://localhost:3000';
   }
 
   fetchVms(): Observable<any> {
     return this.http.get(`${this.baseUrl}/vms`)
                     .map(response => response.json());
   }
+
+  fetchVmsPaged(page, pagesize): Observable<any> {
+    console.log(`${this.baseUrl}/vms?page=${page}&pagesize=${pagesize}`)
+    return this.http.get(`${this.baseUrl}/vms?page=${page}&pagesize=${pagesize}`)
+                    .map(response => response.json());
+  }
+
 
   fetchVm(id: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/vms/${id}`)
