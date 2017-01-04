@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VmserviceApiService } from '../vmservice-api.service';
-import { Vm } from '../shared/vm';
+import { Vm, VmApi } from '../shared/vm';
 import { VmProperty } from '../shared/vmproperty';
 import {State} from "clarity-angular";
 
@@ -10,7 +10,8 @@ import {State} from "clarity-angular";
   styleUrls: ['./vms.component.scss']
 })
 export class VmsComponent implements OnInit {
-  vms: Vm[];
+  vms: any = [];
+  allvms: Vm[]
   total: number;
   loading: boolean = true;
 
@@ -30,10 +31,10 @@ export class VmsComponent implements OnInit {
                 filters[property] = [value];
             }
         }*/
-        this._vmServiceApiService.fetchVmsPaged(state.page.from, state.page.size)
+        this._vmServiceApiService.fetchVmPaged(state.page.from, state.page.size)
                     .subscribe(
-                      vms => { this.vms = vms; this.total = this.vms.length },
-                      error => console.log('Error fetching Vms'));
+                      vms => { this.vms = vms; this.total = this.vms.total; console.log(this.total) }, 
+                      error => console.log('Error fetching Vms')); 
 /*        this.fetchVms().filter(filters)
             .sort(<{by: string, reverse: boolean}>state.sort)
             .fetch(state.page.from, state.page.size)
@@ -43,6 +44,9 @@ export class VmsComponent implements OnInit {
                 this.loading = false;
             }); */
         this.loading = false;
+    }
+    setTotal() {
+
     }
 
   ngOnInit() {

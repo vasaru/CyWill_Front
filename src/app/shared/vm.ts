@@ -1,5 +1,7 @@
 import { VmProperty } from './vmproperty';
 
+
+
 export class Vm {
         vmid: string;
         stats: string;
@@ -21,4 +23,10 @@ export class Vm {
                 this.servername = obj && obj.servername || null;
                 this.alerts = obj && obj.alerts || null;
         }
+}
+
+
+export class VmApi {
+        total: number;
+        vms: Vm[];
 }
