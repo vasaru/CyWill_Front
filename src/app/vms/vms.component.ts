@@ -23,15 +23,17 @@ export class VmsComponent implements OnInit {
         // because that's what our backend-calling service is expecting
         console.log(state.page.from + " "+ state.page.to);
         console.log(state.page.size)
-/*
-        let filters:{[prop:string]: any[]} = {};
+
+        let filters:{[prop:string]: any} = {};
         if (state.filters) {
             for (let filter of state.filters) {
                 let {property, value} = <{property: string, value: string}>filter;
-                filters[property] = [value];
+                filters[property] = value;
+                console.log(property+" "+value)
             }
-        }*/
-        this._vmServiceApiService.fetchVmPaged(state.page.from, state.page.size)
+        }
+        
+        this._vmServiceApiService.fetchVmPaged(state.page.from, state.page.size,<{by: string, reverse: boolean}>state.sort,filters)
                     .subscribe(
                       vms => { this.vms = vms; this.total = this.vms.total; console.log(this.total) }, 
                       error => console.log('Error fetching Vms')); 
@@ -47,6 +49,10 @@ export class VmsComponent implements OnInit {
     }
     setTotal() {
 
+    }
+
+    clicked(vm) {
+        console.log("Clicked " +vm.servername)
     }
 
   ngOnInit() {

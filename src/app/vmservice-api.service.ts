@@ -17,9 +17,33 @@ export class VmserviceApiService {
                     .map(response => response.json());
   }
 
-  fetchVmPaged(page, pagesize): Observable<VmApi[]> {
-    console.log(`${this.baseUrl}/vms?page=${page}&pagesize=${pagesize}`)
-    return this.http.get(`${this.baseUrl}/vms?page=${page}&pagesize=${pagesize}`)
+  fetchVmPaged(page, pagesize,sort,filters): Observable<VmApi[]> {
+    console.log(sort);
+    console.log(filters);
+    var sortstr="";
+    var filtstr="";
+    var baseurl=`${this.baseUrl}/vms`;
+    console.log("Filters length = "+Object.keys(filters).length)
+    if(Object.keys(filters).length > 0) {
+      var tmp=new Buffer(JSON.stringify(filters)).toString('base64');
+      filtstr="&filters="+tmp;
+    }
+
+    if(sort) {
+      console.log("Sort order is set");
+      var tmp= new Buffer(JSON.stringify(sort)).toString('base64');
+      sortstr="&sort="+tmp
+    }
+
+    console.log(filtstr);
+    Object.keys(filters).forEach(function(key,index) {
+      console.log("Filter by "+key+" value "+filters[key])
+
+    });
+    baseurl+=`?page=${page}&pagesize=${pagesize}`;
+    baseurl+=sortstr+filtstr;
+    console.log(baseurl);
+    return this.http.get(baseurl)
                     .map(response => response.json())
                     .catch(this.handleError);
   }
