@@ -15,6 +15,7 @@ export class VmsComponent implements OnInit {
   total: number;
   loading: boolean = true;
   showvm: any;
+  vm_detail: any;
 
   constructor(private _vmServiceApiService: VmserviceApiService) {}
 
@@ -53,13 +54,16 @@ export class VmsComponent implements OnInit {
     }
 
     clicked(vm) {
-        this._vmServiceApiService.fetchVm(vm.vmid)
+
+        this._vmServiceApiService.fetchVmDetails(vm.vmid)
                     .subscribe(
-                      vms => { this.vms = vms; this.total = this.vms.total; console.log(this.total) }, 
-                      error => console.log('Error fetching Vms')); 
+                      vm_detail => { this.vm_detail = vm_detail; this.total = this.vms.total; console.log(this.total) }, 
+                      error => console.log('Error fetching Vm_details')); 
 
         console.log("Clicked " +vm.servername);
+       // console.log("Num cpu: "+this.vm_detail[0].numcpu);
         this.showvm = vm;
+        
     }
 
   ngOnInit() {

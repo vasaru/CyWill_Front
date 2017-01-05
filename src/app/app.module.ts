@@ -10,6 +10,8 @@ import { AboutComponent } from "./about/about.component";
 import { VmsComponent } from './vms/vms.component';
 import { VmComponent } from './vm/vm.component';
 import { VmserviceApiService } from './vmservice-api.service';
+import { CostsComponent } from './costs/costs.component';
+import { CustomersComponent } from './customers/customers.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +19,9 @@ import { VmserviceApiService } from './vmservice-api.service';
         AboutComponent,
         HomeComponent,
         VmsComponent,
-        VmComponent
+        VmComponent,
+        CostsComponent,
+        CustomersComponent
     ],
     imports: [
         BrowserModule,

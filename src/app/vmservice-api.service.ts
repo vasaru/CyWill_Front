@@ -67,4 +67,10 @@ export class VmserviceApiService {
     return Observable.throw(errMsg);
   }
 
+  fetchVmDetails(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/vmdetails/${id}`)
+                    .map(response => response.json());
+  }
+
+  
 }

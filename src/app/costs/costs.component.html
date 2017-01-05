@@ -1,0 +1,75 @@
+
+<nav class="sidenav">
+    <section class="sidenav-content">
+        <a href="..." class="nav-link active">
+            Nav Element 1
+        </a>
+        <a href="..." class="nav-link">
+            Nav Element 2
+        </a>
+        <section class="nav-group collapsible">
+            <input id="tabexample1" type="checkbox">
+            <label for="tabexample1">Collapsible Nav Element</label>
+            <ul class="nav-list">
+                <li><a class="nav-link">Link 1</a></li>
+                <li><a class="nav-link">Link 2</a></li>
+            </ul>
+        </section>
+        <section class="nav-group">
+            <input id="tabexample2" type="checkbox">
+            <label for="tabexample2">Default Nav Element</label>
+            <ul class="nav-list">
+                <li><a class="nav-link">Link 1</a></li>
+                <li><a class="nav-link">Link 2</a></li>
+                <li><a class="nav-link active">Link 3</a></li>
+                <li><a class="nav-link">Link 4</a></li>
+                <li><a class="nav-link">Link 5</a></li>
+                <li><a class="nav-link">Link 6</a></li>
+            </ul>
+        </section>
+    </section>
+</nav>
+
+
+<form #employeeForm="ngForm" (ngSubmit)="onSubmit()" [hidden]="submitted">
+    <section class="form-block">
+        <label>Add Employee Information</label>
+        <div class="form-group">
+            <label for="empFirstName">First Name</label>
+            <label for="empFirstName"
+                aria-haspopup="true"
+                role="tooltip"
+                class="tooltip tooltip-validation tooltip-md"
+                [class.invalid]="firstNameInput.invalid && (firstNameInput.dirty || firstNameInput.touched)">
+                <input type="text" id="empFirstName" placeholder="Enter first name"
+                    required
+                    name="firstName"
+                    [(ngModel)]="model.firstName"
+                    #firstNameInput="ngModel">
+                <span class="tooltip-content">
+                    First Name is Required.
+                </span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="empLastName">Last Name</label>
+            <label for="empLastName"
+                aria-haspopup="true"
+                role="tooltip"
+                class="tooltip tooltip-validation tooltip-md"
+                [class.invalid]="lastNameInput.invalid && (lastNameInput.dirty || lastNameInput.touched)">
+                <input type="text" id="empLastName" placeholder="Enter last name"
+                    required
+                    name="lastName"
+                    [(ngModel)]="model.lastName"
+                    #lastNameInput="ngModel">
+                <span class="tooltip-content">
+                    Last Name is Required.
+                </span>
+            </label>
+        </div>
+        <button class="btn btn-primary" type="submit"
+            [disabled]="employeeForm.form.invalid">Add</button>
+    </section>
+</form>
+
