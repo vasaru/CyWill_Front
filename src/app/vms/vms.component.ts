@@ -14,6 +14,7 @@ export class VmsComponent implements OnInit {
   allvms: Vm[]
   total: number;
   loading: boolean = true;
+  showvm: any;
 
   constructor(private _vmServiceApiService: VmserviceApiService) {}
 
@@ -52,7 +53,13 @@ export class VmsComponent implements OnInit {
     }
 
     clicked(vm) {
-        console.log("Clicked " +vm.servername)
+        this._vmServiceApiService.fetchVm(vm.vmid)
+                    .subscribe(
+                      vms => { this.vms = vms; this.total = this.vms.total; console.log(this.total) }, 
+                      error => console.log('Error fetching Vms')); 
+
+        console.log("Clicked " +vm.servername);
+        this.showvm = vm;
     }
 
   ngOnInit() {
