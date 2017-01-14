@@ -15,7 +15,7 @@
  <clr-dg-footer>
         {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
         of {{vms.total}} VMs
-        <clr-dg-pagination #pagination [clrDgPageSize]="15" [clrDgTotalItems]="vms.total"></clr-dg-pagination>
+        <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="vms.total"></clr-dg-pagination>
     </clr-dg-footer>
 
 </clr-datagrid>
@@ -59,12 +59,9 @@
                 <button class="btn btn-sm btn-link">
                     Get Alerts
                 </button>
-                <button class="btn btn-sm btn-link">
-                    Action 2
-                </button>
                 <div class="dropdown top-left">
                     <button class="dropdown-toggle btn btn-sm btn-link">
-                        Details from date
+                        Date
                         <clr-icon shape="caret down"></clr-icon>
                     </button>
                     <div class="dropdown-menu">
