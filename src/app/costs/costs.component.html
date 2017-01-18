@@ -1,34 +1,40 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th class="left">Cost for</th>
-      <th class="left">Per</th>
-      <th class="left">Amount</th>
-      <th class="left">Currency</th>
-      <th class="left">Valid</th>
-      <th class="left">Description</th>
-      <th class="left">Actions</th>
-      </tr>
-  </thead>
-  <tbody>
-  </tbody>
+<clr-datagrid (clrDgRefresh)="refresh($event)" [(clrDgSelected)]="selected" [clrDgLoading]="loading">
+    <clr-dg-column>Cost ID</clr-dg-column>
+    <clr-dg-column [clrDgField]="'costname'">Name</clr-dg-column>
+    <clr-dg-column [clrDgField]="'currency'">Currency</clr-dg-column>
+    <clr-dg-column [clrDgField]="'amount'">Amount</clr-dg-column>
+    <clr-dg-column [clrDgField]="'costtype'">Cost Typer</clr-dg-column>
+    <clr-dg-row *ngFor="let c of costs.data" [clrDgItem]="costs" >
+        <clr-dg-cell>{{c.id}}</clr-dg-cell>
+        <clr-dg-cell>{{c.costname}}</clr-dg-cell>
+        <clr-dg-cell>{{c.currency}}</clr-dg-cell>
+        <clr-dg-cell>{{c.amount}}</clr-dg-cell>
+        <clr-dg-cell>{{c.costtype}}</clr-dg-cell>
+        <clr-dg-cell>{{c.validfrom}} - {{c.validto}}</clr-dg-cell>
+        <clr-dg-cell>{{c.description}}</clr-dg-cell>
+    </clr-dg-row>
+ <clr-dg-footer>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+        of {{costs.total}} Costs
+        <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="costs.total"></clr-dg-pagination>
+    </clr-dg-footer>
 
+</clr-datagrid>
 
-</table>
 
 
 <button class="btn btn-primary" (click)="opened = true">Add cost</button>
 <clr-modal [(clrModalOpen)]="opened" [clrModalSize]="'lg'">
     <h3 class="modal-title">Add cost</h3>
     <div class="modal-body">
-      <form>
+      <form class="compact">
           <section class="form-block">
               <div class="form-group">
                   <label for="costname">What to charge for:</label>
                   <div class="select">
                       <select name="costname" required id="costname" class="form-control" [(ngModel)]="newcost.costname">
                           <option>Please select...</option>
-                          <option *ngFor="let item of costs">{{ item }} </option>
+                          <option *ngFor="let item of costkeys">{{ item }} </option>
                       </select>
                   </div>
                   <div class="select">
@@ -58,7 +64,7 @@
 
               <div class="form-group">
                   <label for="description">Description:</label>
-                  <textarea rows="5" id="description" class="form-control" [(ngModel)]="newcost.description" name="description" placeholder="Description">
+                  <textarea rows="3" id="description" class="form-control" [(ngModel)]="newcost.description" name="description" placeholder="Description">
                   </textarea>
               </div>
           </section>

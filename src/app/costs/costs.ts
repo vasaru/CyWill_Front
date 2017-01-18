@@ -4,6 +4,8 @@ export class Cost {
     public currency: string;
     public amount: string;
     public costtype: string;
+    public validfrom: string;
+    public validto: string;
     public description: string;
 
 
