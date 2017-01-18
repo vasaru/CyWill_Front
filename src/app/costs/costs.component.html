@@ -1,75 +1,75 @@
-
-<nav class="sidenav">
-    <section class="sidenav-content">
-        <a href="..." class="nav-link active">
-            Nav Element 1
-        </a>
-        <a href="..." class="nav-link">
-            Nav Element 2
-        </a>
-        <section class="nav-group collapsible">
-            <input id="tabexample1" type="checkbox">
-            <label for="tabexample1">Collapsible Nav Element</label>
-            <ul class="nav-list">
-                <li><a class="nav-link">Link 1</a></li>
-                <li><a class="nav-link">Link 2</a></li>
-            </ul>
-        </section>
-        <section class="nav-group">
-            <input id="tabexample2" type="checkbox">
-            <label for="tabexample2">Default Nav Element</label>
-            <ul class="nav-list">
-                <li><a class="nav-link">Link 1</a></li>
-                <li><a class="nav-link">Link 2</a></li>
-                <li><a class="nav-link active">Link 3</a></li>
-                <li><a class="nav-link">Link 4</a></li>
-                <li><a class="nav-link">Link 5</a></li>
-                <li><a class="nav-link">Link 6</a></li>
-            </ul>
-        </section>
-    </section>
-</nav>
+<table class="table">
+  <thead>
+    <tr>
+      <th class="left">Cost for</th>
+      <th class="left">Per</th>
+      <th class="left">Amount</th>
+      <th class="left">Currency</th>
+      <th class="left">Valid</th>
+      <th class="left">Description</th>
+      <th class="left">Actions</th>
+      </tr>
+  </thead>
+  <tbody>
+  </tbody>
 
 
-<form #employeeForm="ngForm" (ngSubmit)="onSubmit()" [hidden]="submitted">
-    <section class="form-block">
-        <label>Add Employee Information</label>
-        <div class="form-group">
-            <label for="empFirstName">First Name</label>
-            <label for="empFirstName"
-                aria-haspopup="true"
-                role="tooltip"
-                class="tooltip tooltip-validation tooltip-md"
-                [class.invalid]="firstNameInput.invalid && (firstNameInput.dirty || firstNameInput.touched)">
-                <input type="text" id="empFirstName" placeholder="Enter first name"
-                    required
-                    name="firstName"
-                    [(ngModel)]="model.firstName"
-                    #firstNameInput="ngModel">
-                <span class="tooltip-content">
-                    First Name is Required.
-                </span>
-            </label>
-        </div>
-        <div class="form-group">
-            <label for="empLastName">Last Name</label>
-            <label for="empLastName"
-                aria-haspopup="true"
-                role="tooltip"
-                class="tooltip tooltip-validation tooltip-md"
-                [class.invalid]="lastNameInput.invalid && (lastNameInput.dirty || lastNameInput.touched)">
-                <input type="text" id="empLastName" placeholder="Enter last name"
-                    required
-                    name="lastName"
-                    [(ngModel)]="model.lastName"
-                    #lastNameInput="ngModel">
-                <span class="tooltip-content">
-                    Last Name is Required.
-                </span>
-            </label>
-        </div>
-        <button class="btn btn-primary" type="submit"
-            [disabled]="employeeForm.form.invalid">Add</button>
-    </section>
-</form>
+</table>
+
+
+<button class="btn btn-primary" (click)="opened = true">Add cost</button>
+<clr-modal [(clrModalOpen)]="opened" [clrModalSize]="'lg'">
+    <h3 class="modal-title">Add cost</h3>
+    <div class="modal-body">
+      <form>
+          <section class="form-block">
+              <div class="form-group">
+                  <label for="costname">What to charge for:</label>
+                  <div class="select">
+                      <select name="costname" required id="costname" class="form-control" [(ngModel)]="newcost.costname">
+                          <option>Please select...</option>
+                          <option *ngFor="let item of costs">{{ item }} </option>
+                      </select>
+                  </div>
+                  <div class="select">
+                      <select id="itemtype" name="itemtype" class="form-control" [(ngModel)]="newcost.itemtype" >
+                        <option>GB</option>
+                        <option>MB</option>
+                        <option>TB</option>
+                        <option>Amount</option>
+                        <option>Per Item</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="cost">Cost:</label>
+                  <input size="10" type="text" id="cost" class="form-control" [(ngModel)]="newcost.cost" name="cost" placeholder="Cost">
+              </div>
+              <div class="form-group">
+                  <label for="currency">Currency:</label>
+                  <input size="10" type="text" id="currency" class="form-control" [(ngModel)]="newcost.currency" name="currency" placeholder="Currency">
+              </div>
+              <div class="form-group">
+                  <label for="validfrom">Valid:</label>
+                  <input size="10" type="text" id="validfrom" class="form-control" [(ngModel)]="newcost.validfrom" name="validfrom" placeholder="yyyy-mm-dd"> to 
+                  <input size="10" type="text" id="validto" class="form-control" [(ngModel)]="newcost.validto" name="validto" placeholder="yyyy-mm-dd">
+
+              </div>
+
+              <div class="form-group">
+                  <label for="description">Description:</label>
+                  <textarea rows="5" id="description" class="form-control" [(ngModel)]="newcost.description" name="description" placeholder="Description">
+                  </textarea>
+              </div>
+          </section>
+      </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="opened = false">Cancel</button>
+        <button type="submit" class="btn btn-primary" (click)="opened = false; addCost()">Ok</button>
+    </div>
+</clr-modal>
+
+
+
 

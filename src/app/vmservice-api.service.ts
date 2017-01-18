@@ -17,6 +17,12 @@ export class VmserviceApiService {
                     .map(response => response.json());
   }
 
+  fetchCostKeys(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/costkeys`)
+                    .map(response => response.json());
+  }
+
+
   fetchVmPaged(page, pagesize,sort,filters): Observable<VmApi[]> {
     console.log(sort);
     console.log(filters);
@@ -68,7 +74,7 @@ export class VmserviceApiService {
   }
 
   fetchVmDetails(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/vmdetails/${id}`)
+    return this.http.get(`${this.baseUrl}/vms/${id}/details`)
                     .map(response => response.json());
   }
 
