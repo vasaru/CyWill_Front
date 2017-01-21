@@ -1,21 +1,21 @@
 <clr-datagrid (clrDgRefresh)="refresh($event)" [(clrDgSelected)]="selected" [clrDgLoading]="loading">
-    <clr-dg-column>Cost ID</clr-dg-column>
     <clr-dg-column [clrDgField]="'costname'">Name</clr-dg-column>
     <clr-dg-column [clrDgField]="'currency'">Currency</clr-dg-column>
     <clr-dg-column [clrDgField]="'amount'">Amount</clr-dg-column>
-    <clr-dg-column [clrDgField]="'costtype'">Cost Typer</clr-dg-column>
-    <clr-dg-row *ngFor="let c of costs.data" [clrDgItem]="costs" >
-        <clr-dg-cell>{{c.id}}</clr-dg-cell>
+    <clr-dg-column [clrDgField]="'costtype'">Cost Type</clr-dg-column>
+    <clr-dg-column [clrDgField]="'validfrom'">Validity</clr-dg-column>
+    <clr-dg-column>Description</clr-dg-column>
+
+    <clr-dg-row *ngFor="let c of costs.data" [clrDgItem]="costs">
         <clr-dg-cell>{{c.costname}}</clr-dg-cell>
         <clr-dg-cell>{{c.currency}}</clr-dg-cell>
-        <clr-dg-cell>{{c.amount}}</clr-dg-cell>
-        <clr-dg-cell>{{c.costtype}}</clr-dg-cell>
+        <clr-dg-cell>{{c.cost}}</clr-dg-cell>
+        <clr-dg-cell>{{c.itemtype}}</clr-dg-cell>
         <clr-dg-cell>{{c.validfrom}} - {{c.validto}}</clr-dg-cell>
         <clr-dg-cell>{{c.description}}</clr-dg-cell>
     </clr-dg-row>
- <clr-dg-footer>
-        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
-        of {{costs.total}} Costs
+    <clr-dg-footer>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{costs.total}} Costs
         <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="costs.total"></clr-dg-pagination>
     </clr-dg-footer>
 
@@ -27,55 +27,27 @@
 <clr-modal [(clrModalOpen)]="opened" [clrModalSize]="'lg'">
     <h3 class="modal-title">Add cost</h3>
     <div class="modal-body">
-      <form class="compact">
-          <section class="form-block">
-              <div class="form-group">
-                  <label for="costname">What to charge for:</label>
-                  <div class="select">
-                      <select name="costname" required id="costname" class="form-control" [(ngModel)]="newcost.costname">
-                          <option>Please select...</option>
-                          <option *ngFor="let item of costkeys">{{ item }} </option>
-                      </select>
-                  </div>
-                  <div class="select">
-                      <select id="itemtype" name="itemtype" class="form-control" [(ngModel)]="newcost.itemtype" >
-                        <option>GB</option>
-                        <option>MB</option>
-                        <option>TB</option>
-                        <option>Amount</option>
-                        <option>Per Item</option>
-                      </select>
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label for="cost">Cost:</label>
-                  <input size="10" type="text" id="cost" class="form-control" [(ngModel)]="newcost.cost" name="cost" placeholder="Cost">
-              </div>
-              <div class="form-group">
-                  <label for="currency">Currency:</label>
-                  <input size="10" type="text" id="currency" class="form-control" [(ngModel)]="newcost.currency" name="currency" placeholder="Currency">
-              </div>
-              <div class="form-group">
-                  <label for="validfrom">Valid:</label>
-                  <input size="10" type="text" id="validfrom" class="form-control" [(ngModel)]="newcost.validfrom" name="validfrom" placeholder="yyyy-mm-dd"> to 
-                  <input size="10" type="text" id="validto" class="form-control" [(ngModel)]="newcost.validto" name="validto" placeholder="yyyy-mm-dd">
 
-              </div>
+        <form class="form" [formGroup]="addCostform" (ngSubmit)="addCost()" [hidden]="submitted">
+            <section class="form-block">
+                <div class="form-group">
+                    <label for="costname">Charge for</label>
+                    <label for="costname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="addCostform.get('costname').invalid && addCostform.get('costname') == 'Please select...'
+                            && (addCostform.get('costname').dirty || addCostform.get('costname').touched)">
+                        <div class="select">
+                            <select name="costname"  id="costname" formControlName="costname" class="form-control required" [(ngModel)]="newcost.costname">
+                                <option>Please select...</option>
+                                <option *ngFor="let item of costkeys" value="{{item}}">{{ item }} </option>
+                            </select>
+                        </div>
 
-              <div class="form-group">
-                  <label for="description">Description:</label>
-                  <textarea rows="3" id="description" class="form-control" [(ngModel)]="newcost.description" name="description" placeholder="Description">
-                  </textarea>
-              </div>
-          </section>
-      </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline" (click)="opened = false">Cancel</button>
-        <button type="submit" class="btn btn-primary" (click)="opened = false; addCost()">Ok</button>
+                        <span class="tooltip-content">
+                            Charge is required.
+                        </span>
+                    </label>
+                </div>
+                <button class="btn btn-primary" type="submit" [disabled]="addCostform.get('costname') == 'Please select...'">Add</button>
+            </section>
+        </form>
     </div>
 </clr-modal>
-
-
-
-
