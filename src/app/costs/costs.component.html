@@ -1,3 +1,9 @@
+<div class="col-md-6"><span class="pull-right">
+    <button class="btn btn-outline" (click)="opened = true">Add cost</button>
+    <button class="btn btn-outline" (click)="recalculate()">Recalculate</button>
+</span>
+</div>
+
 <clr-datagrid (clrDgRefresh)="refresh($event)" [(clrDgSelected)]="selected" [clrDgLoading]="loading">
     <clr-dg-column [clrDgField]="'costname'">Name</clr-dg-column>
     <clr-dg-column [clrDgField]="'currency'">Currency</clr-dg-column>
@@ -5,7 +11,6 @@
     <clr-dg-column [clrDgField]="'costtype'">Cost Type</clr-dg-column>
     <clr-dg-column [clrDgField]="'validfrom'">Validity</clr-dg-column>
     <clr-dg-column>Description</clr-dg-column>
-
     <clr-dg-row *ngFor="let c of costs.data" [clrDgItem]="costs">
         <clr-dg-cell>{{c.costname}}</clr-dg-cell>
         <clr-dg-cell>{{c.currency}}</clr-dg-cell>
@@ -18,35 +23,67 @@
         {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{costs.total}} Costs
         <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="costs.total"></clr-dg-pagination>
     </clr-dg-footer>
-
 </clr-datagrid>
-
-
-
-<button class="btn btn-primary" (click)="opened = true">Add cost</button>
 <clr-modal [(clrModalOpen)]="opened" [clrModalSize]="'lg'">
     <h3 class="modal-title">Add cost</h3>
     <div class="modal-body">
-
-        <form class="form" [formGroup]="addCostform" (ngSubmit)="addCost()" [hidden]="submitted">
+        <form class="form" [formGroup]="addCostform" (ngSubmit)="addCost()" [hidden]="submitted" #spy>
             <section class="form-block">
-                <div class="form-group">
-                    <label for="costname">Charge for</label>
-                    <label for="costname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="addCostform.get('costname').invalid && addCostform.get('costname') == 'Please select...'
-                            && (addCostform.get('costname').dirty || addCostform.get('costname').touched)">
-                        <div class="select">
-                            <select name="costname"  id="costname" formControlName="costname" class="form-control required" [(ngModel)]="newcost.costname">
-                                <option>Please select...</option>
+                <div class="form-group row">
+                    <div class="col-lg-2 col-md-12 col-sm-12 -col-xs-12">
+                        <label for="costname">Charge for</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 -col-xs-12">
+                        <div class="select form-control">
+                            <select name="costname" id="costname" formControlName="costname" class="form-control required" [(ngModel)]="newcost.costname">
                                 <option *ngFor="let item of costkeys" value="{{item}}">{{ item }} </option>
                             </select>
                         </div>
-
-                        <span class="tooltip-content">
-                            Charge is required.
-                        </span>
-                    </label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 -col-xs-12">
+                        <div class="select form-control">
+                            <select name="itemtype" id="itemtype" formControlName="itemtype" class="form-control required" [(ngModel)]="newcost.itemtype">
+                                <option>Per MB</option>
+                                <option>Per GB</option>
+                                <option>Per TB</option>
+                                <option>Per Item</option>
+                                <option>Per Occurence</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <button class="btn btn-primary" type="submit" [disabled]="addCostform.get('costname') == 'Please select...'">Add</button>
+                <div class="form-group row">
+                    <div class="col-lg-2 col-md-12 col-sm-12 -col-xs-12">
+                        <label for="cost">Amount</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 -col-xs-12">
+                        <input type="number" name="cost" placeholder="0.00" formControlName="cost" class="form-control required" [(ngModel)]="newcost.cost">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-2 col-md-12 col-sm-12 -col-xs-12">
+                        <label for="validfrom">Valid from</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 -col-xs-12">
+                        <input type="date" name="validfrom" placeholder="yyyy-mm-dd" formControlName="validfrom" class="form-control required" [(ngModel)]="newcost.validfrom">
+                    </div>
+                    -
+                    <div class="col-lg-4 col-md-4 col-sm-12 -col-xs-12">
+                        <input type="date" name="validto" placeholder="yyyy-mm-dd" formControlName="validto" class="form-control required" [(ngModel)]="newcost.validto">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-2 col-md-12 col-sm-12 -col-xs-12">
+                        <label for="description">Description</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 -col-xs-12">
+                        <textarea id="description" rows="2" class="form-control"></textarea>
+                    </div>
+                </div>
+                <button class="btn btn-outline" type="cancel" (click)="opened = false">Cancel</button>
+
+                <button class="btn btn-primary" type="submit" [disabled]="addCostform.get('costname').invalid">Add</button>
+                <br/>TODO: remove this: {{spy.className}}
             </section>
         </form>
     </div>

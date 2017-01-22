@@ -33,29 +33,29 @@ export class CostsComponent implements OnInit {
         favorite: ""
     };
 
-    employeeAddressForm = new FormGroup({
-        fullName: new FormControl('', Validators.required),
-        address: new FormGroup({
-            postalCode: new FormControl('', Validators.required),
-            country: new FormControl('', Validators.required)
-        })
-    });
+
     submitted = false;
-
-    addNewEmployeeAddress() {
-        this.employeeAddressForm.reset();
-        this.submitted = false;
-    }
-
 
     addCostform = new FormGroup({
         costname: new FormControl('', Validators.required),
-        cost: new FormControl('', Validators.required)
+        cost: new FormControl('', Validators.required),
+        itemtype: new FormControl('', Validators.required),
+        validfrom: new FormControl('', Validators.required),
+        validto: new FormControl('', Validators.required)
     });
 
     constructor(
         private _vmServiceApiService: VmserviceApiService
     ) {
+    }
+
+    recalculate() {
+        console.log("In Recalculate");
+        this._vmServiceApiService.recalculateCosts()
+            .subscribe(
+            costs => this.costs = costs,
+            error => console.log('Error fetching Costs'));
+        
     }
 
     refresh(state: State) {

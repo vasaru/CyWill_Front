@@ -29,6 +29,10 @@ export class VmserviceApiService {
                     .map(response => response.json());
   }
 
+  recalculateCosts(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/recalculate/costs`)
+                    .map(response => response.json());
+  }
 
 
   fetchVms(): Observable<any> {
