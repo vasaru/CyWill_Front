@@ -39,6 +39,7 @@ export class CostsComponent implements OnInit {
     addCostform = new FormGroup({
         costname: new FormControl('', Validators.required),
         cost: new FormControl('', Validators.required),
+        currency: new FormControl('', Validators.required),
         itemtype: new FormControl('', Validators.required),
         validfrom: new FormControl('', Validators.required),
         validto: new FormControl('', Validators.required)

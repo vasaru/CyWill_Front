@@ -4,12 +4,14 @@
     <clr-dg-column [clrDgField]="'created'">Creation date</clr-dg-column>
     <clr-dg-column [clrDgField]="'datacenter'">Datacenter</clr-dg-column>
     <clr-dg-column [clrDgField]="'cluster'">Cluster</clr-dg-column>
+    <clr-dg-column [clrDgField]="'totalCost'">Total cost</clr-dg-column>
     <clr-dg-row *ngFor="let vm of vms.data" [clrDgItem]="vm" (click)="clicked(vm)">
         <clr-dg-cell>{{vm.vmid}}</clr-dg-cell>
         <clr-dg-cell>{{vm.servername}}</clr-dg-cell>
         <clr-dg-cell>{{vm.created | date}}</clr-dg-cell>
         <clr-dg-cell>{{vm.datacenter}}</clr-dg-cell>
         <clr-dg-cell>{{vm.cluster}}</clr-dg-cell>
+        <clr-dg-cell>{{vm.totalCost}} {{vm.cost_detail.currency}}</clr-dg-cell>
     </clr-dg-row>
 
  <clr-dg-footer>

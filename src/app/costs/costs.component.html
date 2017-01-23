@@ -43,11 +43,9 @@
                     <div class="col-lg-4 col-md-4 col-sm-12 -col-xs-12">
                         <div class="select form-control">
                             <select name="itemtype" id="itemtype" formControlName="itemtype" class="form-control required" [(ngModel)]="newcost.itemtype">
-                                <option>Per MB</option>
                                 <option>Per GB</option>
-                                <option>Per TB</option>
-                                <option>Per Item</option>
-                                <option>Per Occurence</option>
+                                <option>Amount</option>
+                                <option>Per Occurrence</option>
                             </select>
                         </div>
                     </div>
@@ -56,9 +54,13 @@
                     <div class="col-lg-2 col-md-12 col-sm-12 -col-xs-12">
                         <label for="cost">Amount</label>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-12 -col-xs-12">
-                        <input type="number" name="cost" placeholder="0.00" formControlName="cost" class="form-control required" [(ngModel)]="newcost.cost">
+                    <div class="col-lg-2 col-md-2 col-sm-12 -col-xs-12">
+                        <input type="number" step="any" name="cost" placeholder="0.00" formControlName="cost" class="form-control required" [(ngModel)]="newcost.cost">
                     </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 -col-xs-12">
+                        <input type="text" name="currency" placeholder="Currency" formControlName="currency" class="form-control required" [(ngModel)]="newcost.currency">
+                    </div>
+
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-2 col-md-12 col-sm-12 -col-xs-12">
